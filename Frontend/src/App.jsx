@@ -1,4 +1,5 @@
 // App.jsx
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,61 +11,56 @@ import ManagerPage from "./pages/ManagerPage";
 import EmployeePage from "./pages/EmployeePage";
 import { AnimatePresence, motion } from "framer-motion";
 import "./index.css";
-import { Analytics } from "@vercel/analytics/next"
 
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route
-            path="/"
-            element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <LoginPage />
-              </motion.div>
-            }
-          />
-          <Route
-            path="/manager"
-            element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ManagerPage />
-              </motion.div>
-            }
-          />
-          <Route
-            path="/employee"
-            element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <EmployeePage />
-              </motion.div>
-            }
-          />
-        </Routes>
-      </AnimatePresence>
-      <Analytics /> {/* ✅ Now correctly rendered */}
-    </>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/"
+          element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <LoginPage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/manager"
+          element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ManagerPage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/employee"
+          element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <EmployeePage />
+            </motion.div>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
   );
 };
-
 
 const App = () => {
   console.log("App loaded");
