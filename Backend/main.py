@@ -31,6 +31,9 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome! to DPDzero Backend Feedback System Server"}
 
 @app.on_event("startup")
 def startup_event():
