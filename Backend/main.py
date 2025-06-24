@@ -22,6 +22,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 import os
+import asyncio
 
 load_dotenv()
 app = FastAPI()
@@ -46,9 +47,10 @@ def startup_event():
     except Exception as e:
         print("❌ Failed to initialize Supabase DB:", str(e))
 
+
 @app.get("/")
-def read_root():
-    return {"message": "Welcome! to DPDzero Backend Feedback System Server"}
+async def root():
+    return {"message": "Welcome! Backend Feedback System."}
 
 
 @app.post("/login")
@@ -70,7 +72,6 @@ async def feedback(payload: AddFeedbackPayload, request: Request):
             status_code=400,
             detail=result.get("message") or "Feedback submission failed",
         )
-    return result
 
 
 @app.put("/update_feedback")
@@ -82,7 +83,6 @@ async def update_feedback(payload: UpdateFeedbackPayload, request: Request):
         raise HTTPException(
             status_code=400, detail=result.get("message") or "Update failed"
         )
-    return result
 
 
 @app.post("/request_feedback")
