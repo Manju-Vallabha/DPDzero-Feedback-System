@@ -1,4 +1,9 @@
-from utils.models import AddFeedbackPayload, UpdateFeedbackPayload, acknowledgeData
+from utils.models import (
+    AddFeedbackPayload,
+    UpdateFeedbackPayload,
+    acknowledgeData,
+    requestFeedback,
+)
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from datetime import datetime
@@ -181,4 +186,31 @@ async def acknowledge_feedback(payload: acknowledgeData, request):
             "status": "failed",
             "message": "Failed to acknowledge feedback",
             "error": str(e),
+        }
+
+
+async def request_Feedback(payload: requestFeedback, request):
+    supabase = request.app.state.supabase
+
+    try:
+        # Extract values
+        employee_id = payload.id
+
+        # 1. Check if a row exists with this employee
+        response = (
+            supabase.table("empTable")
+            .update({"requestFeedback": "true"})
+            .eq("emp_id", payload.id)
+            .execute()
+        )
+        if response.data:
+            return {
+                "status": "success",
+                "message": "Feedback request sent successfully",
+            }
+    except Exception as e:
+        print("Error requesting feedback:", str(e))
+        return {
+            "status": "failed",
+            "message": "Failed to request feedback",
         }
