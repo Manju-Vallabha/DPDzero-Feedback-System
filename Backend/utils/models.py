@@ -40,3 +40,7 @@ class acknowledgeData(BaseModel):
     empId: str
     date: str
     acknowledged: bool
+
+
+class requestFeedback(BaseModel):
+    id: str
