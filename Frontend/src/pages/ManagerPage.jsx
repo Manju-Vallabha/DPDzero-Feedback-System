@@ -22,6 +22,7 @@ const ManagerDashboard = () => {
   const [showFeedbackRequestsOnly, setShowFeedbackRequestsOnly] =
     useState(false);
 
+  const [loading, setLoading] = useState(false);
   const noFeedbackModalRef = useRef();
   const feedbackModalRef = useRef();
   const editModalRef = useRef();
@@ -210,11 +211,12 @@ const ManagerDashboard = () => {
   }, [managerId]);
 
   const addFeedback = async (employeeId, feedbackData, requestfeed) => {
+    setLoading(true);
     const payload = {
       mangId: managerId,
       empId: employeeId,
       feedback: feedbackData,
-      requestFeedback: requestfeed ? "false" : "true",
+      requestFeedback: requestfeed ? "true" : "false",
     };
 
     console.log(requestfeed ? "Requesting feedback" : "Adding feedback");
@@ -243,10 +245,13 @@ const ManagerDashboard = () => {
     } catch (error) {
       console.error("Error adding feedback:", error);
       toast.error("Failed to add feedback ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   const updateFeedback = async (employeeId, feedbackIndex, updatedData) => {
+    setLoading(true);
     const payload = {
       mangId: managerId,
       empId: employeeId,
@@ -273,6 +278,8 @@ const ManagerDashboard = () => {
     } catch (error) {
       console.error("Error updating feedback:", error);
       toast.error("Failed to update feedback ❌");
+    } finally {
+      setLoading(false);
     }
   };
   // Ensure this is imported if using a module bundler
@@ -891,10 +898,11 @@ const ManagerDashboard = () => {
                     await addFeedback(
                       selectedEmployee.id,
                       newFeedback,
-                      selectedEmployee.requestfeed
+                      selectedEmployee.requestfeed ? false : false
                     );
 
-                    selectedEmployee.requestfeed = false;
+                    selectedEmployee.requestfeed = false; // Reset request feedback status
+
                     // Update local state
                     selectedEmployee.feedbacks.push(newFeedback);
 
@@ -904,9 +912,35 @@ const ManagerDashboard = () => {
                     setImprovement("");
                     setSentiment("");
                   }}
-                  className="bg-[#4334E9] text-white px-4 py-2 rounded-full hover:bg-[#5A4CF3] transition"
+                  className={`bg-[#4334E9] text-white px-4 py-2 rounded-full hover:bg-[#5A4CF3] transition ${
+                    loading ? "cursor-not-allowed opacity-70" : ""
+                  }`}
+                  disabled={loading}
                 >
-                  Submit
+                  {loading ? (
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 018 8h-4l3 3 3-3h-4a8 8 0 01-8 8v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+                      ></path>
+                    </svg>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
 
                 <button
@@ -1084,9 +1118,35 @@ const ManagerDashboard = () => {
                       setSelectedFeedback(null);
                       setIsEditable(false);
                     }}
-                    className="bg-[#4334E9] text-white px-4 py-2 rounded-full hover:bg-[#5A4CF3] transition"
+                    className={`bg-[#4334E9] text-white px-4 py-2 rounded-full hover:bg-[#5A4CF3] transition ${
+                      loading ? "cursor-not-allowed opacity-70" : ""
+                    }`}
+                    disabled={loading}
                   >
-                    Save Changes
+                    {loading ? (
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 018 8h-4l3 3 3-3h-4a8 8 0 01-8 8v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+                        ></path>
+                      </svg>
+                    ) : (
+                      "Submit"
+                    )}
                   </button>
                 )}
 
