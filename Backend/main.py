@@ -7,10 +7,16 @@ from utils.models import (
     CommentPayload,
     getData,
     acknowledgeData,
+    requestFeedback,
 )
 from utils.auth import verify_user
 from utils.get_data import get_manager_data, get_employee_data
-from utils.feedback import add_feedback, update_feedback_data, acknowledge_feedback
+from utils.feedback import (
+    add_feedback,
+    update_feedback_data,
+    acknowledge_feedback,
+    request_Feedback,
+)
 from utils.comment import comment
 from fastapi.middleware.cors import CORSMiddleware
 import os
@@ -31,9 +37,6 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome! to DPDzero Backend Feedback System Server"}
 
 @app.on_event("startup")
 def startup_event():
@@ -56,13 +59,35 @@ async def login(payload: LoginPayload, request: Request):
 @app.put("/feedback")
 async def feedback(payload: AddFeedbackPayload, request: Request):
     result = await add_feedback(payload, request)
+    if result.get("status") == "success":
+        return {"status": "success", "message": result.get("message")}
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail=result.get("message") or "Feedback submission failed",
+        )
     return result
 
 
 @app.put("/update_feedback")
 async def update_feedback(payload: UpdateFeedbackPayload, request: Request):
     result = await update_feedback_data(payload, request)
+    if result.get("status") == "success":
+        return {"status": "success", "message": result.get("message")}
+    else:
+        raise HTTPException(
+            status_code=400, detail=result.get("message") or "Update failed"
+        )
     return result
+
+
+@app.post("/request_feedback")
+async def request_feedback(payload: requestFeedback, request: Request):
+    result = await request_Feedback(payload, request)
+    if result.get("status") == "success":
+        return {"status": "success", "message": result.get("message")}
+    else:
+        raise HTTPException(status_code=400, detail=result.get("message"))
 
 
 @app.put("/comment")
