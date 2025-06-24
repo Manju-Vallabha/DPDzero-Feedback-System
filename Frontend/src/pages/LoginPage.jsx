@@ -1,13 +1,46 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const [role, setRole] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [serverReady, setServerReady] = useState(false);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const connectToServer = async () => {
+      const toastId = toast.loading("Connecting to server...");
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/`);
+        if (response.ok) {
+          toast.update(toastId, {
+            render: "Connected to server",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setServerReady(true); // ✅ Enable the form
+        } else {
+          throw new Error("Server did not respond");
+        }
+      } catch (error) {
+        console.error("Server connection failed:", error);
+        toast.update(toastId, {
+          render: "Failed to connect to server",
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
+    };
+
+    connectToServer();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -131,9 +164,9 @@ const LoginPage = () => {
             <button
               type="submit"
               className={`w-full bg-blue-600 text-white py-4 rounded-full font-semibold transition duration-300 transform hover:bg-blue-700 hover:scale-105 hover:shadow-lg flex items-center justify-center ${
-                loading ? "cursor-not-allowed opacity-70" : ""
+                loading || !serverReady ? "cursor-not-allowed opacity-70" : ""
               }`}
-              disabled={loading}
+              disabled={loading || !serverReady}
             >
               {loading ? (
                 <svg
