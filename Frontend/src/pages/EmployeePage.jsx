@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit, FaCheckCircle } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -17,6 +17,7 @@ const EmployeeDashboard = () => {
   const [readStatus, setReadStatus] = useState([]);
   const [isEditing, setIsEditing] = useState([]);
   const [showInput, setShowInput] = useState([]);
+  const [requestFeed, setRequestFeed] = useState(false);
 
   // Set initial employee from router state
   useEffect(() => {
@@ -45,6 +46,9 @@ const EmployeeDashboard = () => {
         const employeeData = data?.data?.[0];
         if (employeeData) {
           setEmployee(employeeData);
+          setRequestFeed(
+            employeeData?.requestFeed === "true" ? true : false || false
+          );
         }
       } catch (err) {
         console.error("Error fetching employee info:", err);
@@ -262,6 +266,46 @@ const EmployeeDashboard = () => {
     }
   };
 
+  const requestFeedback = async () => {
+    if (!employee?.id || !employee?.name) {
+      toast.error("Employee information is missing.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/request_feedback`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: employee.id,
+          }),
+        }
+      );
+
+      console.log(
+        "Sending feedback request to:",
+        `${import.meta.env.VITE_BACKEND_URL}/request_feedback`
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to request feedback.");
+      }
+
+      toast.success("Feedback request sent successfully!");
+    } catch (error) {
+      console.error("Error requesting feedback:", error);
+      toast.error("Error sending feedback request.");
+    } finally {
+      setRequestFeed(true);
+    }
+  };
+
   const handleComment = async (index) => {
     const feedback = employee.feedbacks[index];
 
@@ -352,6 +396,18 @@ const EmployeeDashboard = () => {
         </div>
 
         <div className="flex gap-3 flex-wrap justify-end items-center">
+          <button
+            onClick={!requestFeed ? requestFeedback : undefined}
+            disabled={requestFeed}
+            className={`px-5 py-2 rounded-full font-semibold shadow-sm transition-all duration-300 ease-in-out ${
+              requestFeed
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-white text-[#4334E9] border border-[#4334E9] hover:bg-[#4334E9] hover:text-white hover:shadow-md hover:scale-105"
+            }`}
+          >
+            {requestFeed ? "Feedback Requested" : "Request Feedback"}
+          </button>
+
           <button
             onClick={exportEmployeeFeedback}
             className="bg-white text-[#4334E9] px-5 py-2 rounded-full font-semibold shadow-sm border border-[#4334E9] transition-all duration-300 ease-in-out hover:bg-[#4334E9] hover:text-white hover:shadow-md hover:scale-105"
