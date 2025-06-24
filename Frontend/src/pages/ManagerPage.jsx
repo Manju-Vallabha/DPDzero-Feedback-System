@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+// import { teamMembers } from "/src/pages/data.jsx";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -884,6 +885,8 @@ const ManagerDashboard = () => {
                       comment: "",
                     };
 
+                    setTags(tags);
+
                     // Send to backend
                     await addFeedback(
                       selectedEmployee.id,
@@ -1057,10 +1060,12 @@ const ManagerDashboard = () => {
                         improvement,
                         sentiment,
                         updatedDate: new Date().toISOString().split("T")[0], // ➜ "YYYY-MM-DD"
-                        tags: tags.join(","), // <- key line: make it a comma-separated string
+                        tags: editTags.join(","),
                         acknowledged: false,
                         comment: "",
                       };
+
+                      setTags(editTags); // Ensure tags are updated
 
                       const index = selectedFeedback.index;
 
