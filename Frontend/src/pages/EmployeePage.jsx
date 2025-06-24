@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit, FaCheckCircle } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
