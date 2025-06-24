@@ -11,6 +11,7 @@ import ManagerPage from "./pages/ManagerPage";
 import EmployeePage from "./pages/EmployeePage";
 import { AnimatePresence, motion } from "framer-motion";
 import "./index.css";
+import { Analytics } from "@vercel/analytics/next"
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -59,6 +60,7 @@ const AnimatedRoutes = () => {
         />
       </Routes>
     </AnimatePresence>
+    <Analytics />
   );
 };
 
