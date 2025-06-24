@@ -46,6 +46,10 @@ def startup_event():
     except Exception as e:
         print("❌ Failed to initialize Supabase DB:", str(e))
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome! to DPDzero Backend Feedback System Server"}
+
 
 @app.post("/login")
 async def login(payload: LoginPayload, request: Request):
