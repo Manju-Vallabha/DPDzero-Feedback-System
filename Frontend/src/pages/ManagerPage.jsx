@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
-// import { teamMembers } from "/src/pages/data.jsx";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
