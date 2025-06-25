@@ -39,6 +39,10 @@ This diagram illustrates the flow between the frontend, backend, and database la
 | Styling    | TailwindCSS                     |
 | Animations | Framer Motion                   |
 
+## 🚀 Live Deployment
+
+The application is live and accessible here:  
+🔗 [https://dp-dzero-feedback-system.vercel.app](https://dp-dzero-feedback-system.vercel.app/)
 
 ### 🔐 Dummy Login Credentials
 
