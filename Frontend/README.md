@@ -158,4 +158,54 @@ Visit [http://localhost:5173](http://localhost:5173) to access the app.
 * Integrate charts (e.g., with Chart.js) to visualize feedback sentiment trends
 * Support markdown rendering in comments using `react-markdown`
 
+---
 
+## 🎨 Design Decisions
+
+### 1. **Component Structure**
+
+* Split into role-based pages (`LoginPage`, `ManagerPage`, `EmployeePage`) for clarity and scalability.
+* Kept components lightweight and focused on single responsibility (e.g., feedback form, comment section).
+* Common UI logic like modals and toast handling centralized to reduce duplication.
+
+### 2. **Routing & Navigation**
+
+* Used **React Router** for clean client-side routing.
+* Role-based redirects after login ensure users land on the correct dashboard.
+* URLs are semantically structured (`/manager`, `/employee`), enabling future expansion (e.g., `/admin`).
+
+### 3. **Styling & Responsiveness**
+
+* Tailwind CSS was chosen for fast iteration, mobile-first design, and accessible utility classes.
+* Layouts adapt across devices (mobile, tablet, desktop) using responsive grid/flex utilities.
+* Sentiment-based cards are color-coded for instant recognition.
+
+### 4. **Feedback UX**
+
+* Feedback entries are displayed as cards with large emojis to visually convey sentiment (😊 😐 😞).
+* Feedback requests are highlighted prominently for manager attention.
+* Employee comments are acknowledged only upon submission to prevent accidental drafts.
+
+### 5. **Notifications & Interactions**
+
+* Used **React Toastify** to display real-time feedback (success/error) on user actions.
+* Added loading state handling to inputs where needed (e.g., form submission).
+* Used optimistic UI updates and refetching for smoother user experience.
+
+### 6. **Animations**
+
+* Integrated **Framer Motion** to animate page transitions and card interactions.
+* Animation enhances perception of speed and feedback acknowledgement.
+
+### 7. **PDF Export**
+
+* Integrated **jsPDF** and `jspdf-autotable` to export reports in a user-friendly way.
+* Export options are available on both dashboards to promote transparency and offline sharing.
+
+### 8. **Accessibility**
+
+* All interactive elements include ARIA labels.
+* Focus rings and keyboard navigation were enforced using Tailwind’s `focus-visible` and `ring` utilities.
+* Text and background colors were selected to maintain strong contrast (WCAG 2.1 AA compliance).
+
+---
