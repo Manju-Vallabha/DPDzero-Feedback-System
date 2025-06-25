@@ -17,7 +17,7 @@ This is a **Lightweight Feedback System** built for an internship assignment. It
 
 This diagram illustrates the flow between the frontend, backend, and database layers.
 
-![System Architecture](./Assets/diagram-arech.png)
+![System Architecture](./assets/diagram-arech.png)
 
 ---
 
@@ -195,7 +195,7 @@ create another table named `mangerTable` with the following columns:
 
 This image shows the structure of the tables used in Supabase (PostgreSQL).
 
-![Database Schema](./Assets/database-schema.png)
+![Database Schema](./assets/database-schema.png)
 
 ---
 
