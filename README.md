@@ -17,7 +17,7 @@ This is a **Lightweight Feedback System** built for an internship assignment. It
 
 This diagram illustrates the flow between the frontend, backend, and database layers.
 
-![System Architecture](./assets/diagram-arech.png)
+![System Architecture](./assets/diagram.png)
 
 ---
 
