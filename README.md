@@ -11,6 +11,16 @@ This is a **Lightweight Feedback System** built for an internship assignment. It
 - `Feedback Visibility 👀`: Employees view only their own feedback. Managers can edit previous feedback. Employees can acknowledge feedback to confirm receipt.
 - `Dashboards 📊`: Managers have a team overview with feedback counts and task statuses. Employees see a timeline of their feedback with sentiment indicators.
 
+---
+
+### 📊 System Architecture
+
+This diagram illustrates the flow between the frontend, backend, and database layers.
+
+![System Architecture](./Assets/diagram-arech.png)
+
+---
+
 ### Additional Features
 - `Feedback Requests 🙋‍♂️`: Employees can request feedback from their manager.
 - `Tagging 🏷️`: Managers can categorize feedback with tags such as “communication” or “leadership”.
@@ -42,6 +52,8 @@ This is a **Lightweight Feedback System** built for an internship assignment. It
 | Employee | emilycarter | emily@12345 |
 | Employee | jameswilson | jameswilson@12345  |
 
+---
+
 ## Design Decisions
 - `Frontend 🌐`: Tailwind CSS enables rapid, responsive styling. React Router ensures seamless navigation. jsPDF provides lightweight PDF generation.
 - `Backend ⚙️`: FastAPI delivers high-performance, asynchronous APIs. Supabase simplifies authentication and uses JSONB for flexible feedback storage. Docker ensures consistent deployment.
@@ -66,7 +78,7 @@ This is a **Lightweight Feedback System** built for an internship assignment. It
 
 ### 📥 Steps
 
-#### 1. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/feedback-system.git
@@ -179,7 +191,15 @@ create another table named `mangerTable` with the following columns:
 
 ---
 
-## 📚 Full Documentation
+### 🗄️ Database Schema
+
+This image shows the structure of the tables used in Supabase (PostgreSQL).
+
+![Database Schema](./Assets/database-schema.png)
+
+---
+
+### 📚 Full Documentation
 
 For complete details about the project structure, setup, APIs, and design decisions, please refer to the following:
 
@@ -223,8 +243,9 @@ feedback-system/
 ├── README.md                      # Main project documentation
 
 ```
+---
 
-## Challenges and Solutions
+### Challenges and Solutions
 - `Feedback Storage`: Utilized JSONB in Supabase for scalable feedback arrays.
 - `Role-Based Access`: Implemented checks in APIs and UI with Supabase authentication.
 - `PDF Generation`: Employed jsPDF with autotable, addressing edge cases for robust exports.
