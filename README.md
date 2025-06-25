@@ -179,6 +179,16 @@ create another table named `mangerTable` with the following columns:
 
 ---
 
+## 📚 Full Documentation
+
+For complete details about the project structure, setup, APIs, and design decisions, please refer to the following:
+
+* 🔗 [**Frontend Documentation**](./Frontend/README.md) – Setup, components, features, accessibility, UI design, challenges, and future improvements.
+
+* 🔗 [**Backend Documentation**](./Backend/README.md) – API references, database schema, setup instructions, Docker usage, design choices, and future improvements.
+
+---
+
 ### 📁 Project Structure
 
 ```
